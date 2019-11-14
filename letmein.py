@@ -4,7 +4,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
+from pyscreeze import ImageNotFoundException
 import requests
+import pyautogui
 
 
 def createDriverInstance():
@@ -33,7 +35,9 @@ def navigateThroughQuerry(querry, browser):
     searchForQuerry(querry, browser)
     time.sleep(2)
     navigateToFirstLink(browser)
-    time.sleep(4)
+    time.sleep(5)
+    if not thereIsAInvitation():
+        afterReceivingInvitation(browser)
 
 
 def searchForQuerry(querry, browser):
@@ -45,9 +49,24 @@ def searchForQuerry(querry, browser):
 def navigateToFirstLink(browser):
     try:
         browser.find_element(By.XPATH, '(//h3)[1]/../../a').click()
-    except(ElementNotInteractableException):
+    except ElementNotInteractableException:
         print("we are here!")
         browser.find_element(By.XPATH, '(//h2)[1]/../../a').click()
+
+
+def thereIsAInvitation():
+    try:
+        coordinates = pyautogui.locateOnScreen('images/foobar-invitation.png')
+    except ImageNotFoundException:
+        coordinates = None
+    if coordinates is None:
+        return False
+    return True
+
+
+def afterReceivingInvitation(browser):
+    time.sleep(10000000)
+    browser.quit()
 
 
 def main():
