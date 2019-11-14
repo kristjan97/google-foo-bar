@@ -33,12 +33,15 @@ def navigateThroughQuerry(querry, browser):
     browser.get('https://google.com')
     time.sleep(3) # Let the user actually see something!
     searchForQuerry(querry, browser)
-    time.sleep(2)
+    time.sleep(3)
+    if thereIsAInvitation():
+        afterReceivingInvitation(browser)
     navigateToFirstLink(browser)
     time.sleep(5)
-    if not thereIsAInvitation():
+    scrollUpAndDown()
+    time.sleep(60)
+    if thereIsAInvitation():
         afterReceivingInvitation(browser)
-
 
 def searchForQuerry(querry, browser):
     search = browser.find_element_by_name('q')
@@ -56,7 +59,7 @@ def navigateToFirstLink(browser):
 
 def thereIsAInvitation():
     try:
-        coordinates = pyautogui.locateOnScreen('images/foobar-invitation.png')
+        coordinates = pyautogui.locateOnScreen('images/foobar-invitation.png', confidence=0.5)
     except ImageNotFoundException:
         coordinates = None
     if coordinates is None:
@@ -69,6 +72,12 @@ def afterReceivingInvitation(browser):
     browser.quit()
 
 
+def scrollUpAndDown():
+    pyautogui.scroll(-10)
+    time.sleep(5)
+    pyautogui.scroll(10)
+
+
 def main():
     payload = grabTopQuestions()
     if payload is not None:
@@ -77,6 +86,7 @@ def main():
         for i in range(len(querrys) - 1):
             navigateThroughQuerry(querrys[i], browser)
         browser.quit()
+
 
 if __name__ == "__main__":
     main()

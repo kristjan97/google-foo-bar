@@ -5,6 +5,8 @@ configparser==4.0.2
 crayons==0.3.0
 idna==2.8
 MouseInfo==0.1.2
+numpy==1.17.4
+opencv-python==4.1.1.26
 Pillow==6.2.1
 PyAutoGUI==0.9.48
 PyGetWindow==0.0.8
