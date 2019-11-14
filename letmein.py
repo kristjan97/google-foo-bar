@@ -79,13 +79,16 @@ def scrollUpAndDown():
 
 
 def main():
-    payload = grabTopQuestions()
-    if payload is not None:
-        querrys = creatingListOfQuestions(payload)
-        browser = createDriverInstance()
-        for i in range(len(querrys) - 1):
-            navigateThroughQuerry(querrys[i], browser)
-        browser.quit()
+    browser = createDriverInstance()
+    while True: # Runs until it finds the invitation
+        payload = grabTopQuestions()
+        if payload is not None:
+            querrys = creatingListOfQuestions(payload)
+            for i in range(len(querrys) - 1):
+                navigateThroughQuerry(querrys[i], browser)
+        else: # If there is an error getting querrys, the browser will just quit
+            print("Error: Could not access or pull questions from stackexchange API")
+            browser.quit()
 
 
 if __name__ == "__main__":
