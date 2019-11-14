@@ -4,6 +4,8 @@
 It opens a Chrome driver that will scrape 100 questions submitted to Stackoverflow and querry them into Google.
 Each querry will be checked for the Google foo bar challenge invitation.
 
+This bot requires permission to take screenshots of your screen and control mouse movements.
+
 Created by: **Kristjan von Bulow**
 
 ## User Stories
