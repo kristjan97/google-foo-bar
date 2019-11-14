@@ -14,7 +14,7 @@ The following features are implemented:
 * [x] Bot querrys multiple computer science related questions/topics until the google foo bar challenge invitation appears.
 
 The following **optional** features are implemented:
-* [ ] Automate normal user interaction by scrolling page up and down.
+* [x] Automate normal user interaction by scrolling page up and down.
 * [ ] Allow user to log into Google account before the bot will automate searching.
 * [ ] Allow driver to scrape more questions from stackoverflow API
 
