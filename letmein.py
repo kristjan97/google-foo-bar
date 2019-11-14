@@ -5,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException
 import requests
-import json
 
 
 def createDriverInstance():
