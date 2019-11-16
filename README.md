@@ -24,6 +24,8 @@ The following **optional** features are implemented:
 Need more information on how the Google foo bar challenge invitation appears. If you have more information on how it works/appears,
 please contact me at kristjanvonbulow@gmail.com
 
+- I also think that perhaps Google is using their ad personalization module to target people and give them an invitation. What this means is that you cannot run this program without logging into a Google account, also I believe you cannot run this program if you set strict privacy settings on your Google account. 
+
 ## License
 
     Copyright [2019] [Kristjan von Bulow]
