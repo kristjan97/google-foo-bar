@@ -3,7 +3,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
 from pyscreeze import ImageNotFoundException
 import requests
 import pyautogui
@@ -38,10 +38,14 @@ def navigateThroughQuerry(querry, browser):
         afterReceivingInvitation(browser)
     navigateToFirstLink(browser)
     time.sleep(5)
-    scrollUpAndDown()
-    time.sleep(60)
+    if userIsOnAGoogleWebpage(browser):
+        scrollUpAndDown()
+        time.sleep(60)
+    else:
+        time.sleep(4)
     if thereIsAInvitation():
         afterReceivingInvitation(browser)
+
 
 def searchForQuerry(querry, browser):
     search = browser.find_element_by_name('q')
@@ -53,8 +57,11 @@ def navigateToFirstLink(browser):
     try:
         browser.find_element(By.XPATH, '(//h3)[1]/../../a').click()
     except ElementNotInteractableException:
-        print("we are here!")
-        browser.find_element(By.XPATH, '(//h2)[1]/../../a').click()
+        assert "No results found." not in browser.page_source
+        browser.find_element_by_xpath('.//*[@id="rso"]/div[1]/div/div/div/div/h3/a').click()
+    except NoSuchElementException:
+        assert "No results found." not in browser.page_source
+        browser.find_element_by_xpath('.//*[@id="rso"]/div[1]/div/div/div/div/h3/a').click()
 
 
 def thereIsAInvitation():
@@ -78,15 +85,32 @@ def scrollUpAndDown():
     pyautogui.scroll(10)
 
 
+def haveUserSignIn(browser):
+    browser.get('https://google.com')
+    search = browser.find_element_by_name('q')
+    search.send_keys("Sign into your account and just wait")
+    time.sleep(30)
+
+
+# There is a feature where if you are on an official google API page, the challenge can show up
+# if you wait for longer than 5 minutes or something
+def userIsOnAGoogleWebpage(browser):
+    url = browser.current_url
+    if "google.com" in url:
+        return True
+    return False
+
+
 def main():
     browser = createDriverInstance()
+    haveUserSignIn(browser)
     while True: # Runs until it finds the invitation
         payload = grabTopQuestions()
         if payload is not None:
             querrys = creatingListOfQuestions(payload)
             for i in range(len(querrys) - 1):
                 navigateThroughQuerry(querrys[i], browser)
-        else: # If there is an error getting querrys, the browser will just quit
+        else: 
             print("Error: Could not access or pull questions from stackexchange API")
             browser.quit()
 
