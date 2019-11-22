@@ -7,6 +7,27 @@ from selenium.common.exceptions import ElementNotInteractableException, NoSuchEl
 from pyscreeze import ImageNotFoundException
 import requests
 import pyautogui
+from twilio.rest import Client
+import os
+
+
+def createTwilioClient():
+    try:
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+    except(KeyError):
+        print("You dont have your enivornment variables set up for text notificaitons. Check the Github for more info.")
+        return None
+    return Client(account_sid, auth_token)
+
+
+def sendTextMessage(client):
+    message = client.messages \
+                .create(
+                     body="Did you realize you were a champion in their eyes? The foo-bar script worked.",
+                     from_=os.environ['SENDER_PHONE_NUMBER'],
+                     to=os.environ['USER_PHONE_NUMBER']
+                 )
 
 
 def createDriverInstance():
@@ -75,6 +96,9 @@ def thereIsAInvitation():
 
 
 def afterReceivingInvitation(browser):
+    client = createTwilioClient()
+    if client is not None:
+        sendTextMessage(client)
     time.sleep(10000000)
     browser.quit()
 
@@ -113,6 +137,7 @@ def main():
         else: 
             print("Error: Could not access or pull questions from stackexchange API")
             browser.quit()
+
 
 
 if __name__ == "__main__":
