@@ -8,26 +8,26 @@ from pyscreeze import ImageNotFoundException
 import requests
 import pyautogui
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 import os
 
 
 def createTwilioClient():
-    try:
-        account_sid = os.environ['TWILIO_ACCOUNT_SID']
-        auth_token = os.environ['TWILIO_AUTH_TOKEN']
-    except(KeyError):
-        print("You dont have your enivornment variables set up for text notificaitons. Check the Github for more info.")
-        return None
+    account_sid = os.environ['TWILIO_ACCOUNT_SID']
+    auth_token = os.environ['TWILIO_AUTH_TOKEN']
     return Client(account_sid, auth_token)
 
 
 def sendTextMessage(client):
-    message = client.messages \
-                .create(
-                     body="Did you realize you were a champion in their eyes? The foo-bar script worked.",
-                     from_=os.environ['SENDER_PHONE_NUMBER'],
-                     to=os.environ['USER_PHONE_NUMBER']
-                 )
+    try:
+        message = client.messages \
+                    .create(
+                         body="Did you realize you were a champion in their eyes? The foo-bar script worked.",
+                         from_=os.environ['SENDER_PHONE_NUMBER'],
+                         to=os.environ['USER_PHONE_NUMBER']
+                     )
+    except TwilioRestException:
+        pass
 
 
 def createDriverInstance():
@@ -126,7 +126,7 @@ def userIsOnAGoogleWebpage(browser):
 
 
 def main():
-    browser = createDriverInstance()
+    '''browser = createDriverInstance()
     haveUserSignIn(browser)
     while True: # Runs until it finds the invitation
         payload = grabTopQuestions()
@@ -136,7 +136,9 @@ def main():
                 navigateThroughQuerry(querrys[i], browser)
         else: 
             print("Error: Could not access or pull questions from stackexchange API")
-            browser.quit()
+            browser.quit()'''
+    client = createTwilioClient()
+    sendTextMessage(client)
 
 
 
