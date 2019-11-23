@@ -15,7 +15,7 @@ The following features are implemented:
 
 The following **optional** features are implemented:
 * [x] Automate normal user interaction by scrolling page up and down.
-* [ ] Allow user to log into Google account before the bot will automate searching.
+* [x] Allow user to log into Google account before the bot will automate searching.
 * [x] Allow driver to scrape more questions from stackoverflow API
 
 
