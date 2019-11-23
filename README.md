@@ -21,7 +21,9 @@ The following **optional** features are implemented:
 
 ## Usage
 
-Use "python(version goes here) -m pip install < requirements.txt" to grab all requirements for program. then "python(version goes here) letmein.py" to start the bot. 
+- Use "python(version goes here) -m pip install < requirements.txt" to grab all requirements for program. 
+
+- Then "python(version goes here) letmein.py" to start the bot. 
 
 ## Notes
 
