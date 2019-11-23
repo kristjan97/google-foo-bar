@@ -19,6 +19,9 @@ The following **optional** features are implemented:
 * [x] Allow driver to scrape more questions from stackoverflow API
 * [x] Add support for sending text messages when the script is complete
 
+## Usage
+
+Use "python(version goes here) -m pip install < requirements.txt" to grab all requirements for program. then "python(version goes here) letmein.py" to start the bot. 
 
 ## Notes
 
