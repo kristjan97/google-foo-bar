@@ -17,6 +17,7 @@ The following **optional** features are implemented:
 * [x] Automate normal user interaction by scrolling page up and down.
 * [x] Allow user to log into Google account before the bot will automate searching.
 * [x] Allow driver to scrape more questions from stackoverflow API
+* [x] Add support for sending text messages when the script is complete
 
 
 ## Notes
