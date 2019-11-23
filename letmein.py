@@ -1,15 +1,16 @@
 import time
+import os
+import requests
+import pyautogui
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
 from pyscreeze import ImageNotFoundException
-import requests
-import pyautogui
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
-import os
+from dotenv import load_dotenv, find_dotenv
 
 
 def createTwilioClient():
@@ -96,6 +97,7 @@ def thereIsAInvitation():
 
 
 def afterReceivingInvitation(browser):
+    load_dotenv("twilio.env") 
     client = createTwilioClient()
     if client is not None:
         sendTextMessage(client)
@@ -126,7 +128,7 @@ def userIsOnAGoogleWebpage(browser):
 
 
 def main():
-    '''browser = createDriverInstance()
+    browser = createDriverInstance()
     haveUserSignIn(browser)
     while True: # Runs until it finds the invitation
         payload = grabTopQuestions()
@@ -136,9 +138,7 @@ def main():
                 navigateThroughQuerry(querrys[i], browser)
         else: 
             print("Error: Could not access or pull questions from stackexchange API")
-            browser.quit()'''
-    client = createTwilioClient()
-    sendTextMessage(client)
+            browser.quit()
 
 
 

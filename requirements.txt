@@ -128,6 +128,7 @@ pyobjc-framework-WebKit==6.1
 pyperclip==1.7.0
 PyRect==0.1.4
 PyScreeze==0.1.25
+python-dotenv==0.10.3
 PyTweening==1.0.3
 pytz==2019.3
 requests==2.22.0
